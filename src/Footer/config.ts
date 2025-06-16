@@ -5,10 +5,8 @@ import { revalidateFooter } from './hooks/revalidateFooter'
 import { Content } from '@/blocks/Content/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import IFrame from '@/blocks/IFrame/config'
-import { PoppyFormBlock } from '@/blocks/PoppyForm/config'
 import { LinkBlock } from '@/blocks/LinkBlock/config'
 import { ImageSliderBlock } from '@/blocks/ImageSliderBlock/config'
-import { TestimonialBlock } from '@/blocks/Testimonials/config'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
@@ -19,7 +17,7 @@ export const Footer: GlobalConfig = {
         {
           name: 'content',
           type: 'blocks',
-          blocks: [Content, MediaBlock, IFrame, PoppyFormBlock, LinkBlock, ImageSliderBlock, TestimonialBlock],
+          blocks: [Content, MediaBlock, IFrame, LinkBlock, ImageSliderBlock],
           required: false,
         },
     {

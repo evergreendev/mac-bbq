@@ -14,9 +14,6 @@ export interface Config {
     users: User;
     media: Media;
     pages: Page;
-    testimonials: Testimonial;
-    hours: Hour;
-    letters: Letter;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -29,9 +26,6 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
-    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
-    hours: HoursSelect<false> | HoursSelect<true>;
-    letters: LettersSelect<false> | LettersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -159,41 +153,8 @@ export interface Page {
         blockName?: string | null;
         blockType: 'IFrame';
       }
-    | PoppyFormBlock
     | LinkBlock
     | ImageSliderBlock
-    | {
-        heading?: string | null;
-        displayType?: ('count' | 'specific') | null;
-        testimonialsCount?: number | null;
-        selectedTestimonials?: (number | Testimonial)[] | null;
-        showAsCarousel?: boolean | null;
-        backgroundColor?: ('white' | 'lightGray' | 'brandPrimary') | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'testimonialsBlock';
-      }
-    | {
-        type: 'current' | 'future';
-        /**
-         * Maximum number of future hours to display
-         */
-        maxHoursToShow?: number | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'hoursBlock';
-      }
-    | {
-        heading?: string | null;
-        displayType?: ('count' | 'specific') | null;
-        lettersCount?: number | null;
-        selectedLetters?: (number | Letter)[] | null;
-        backgroundColor?: ('white' | 'lightGray' | 'brandPrimary') | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'lettersBlock';
-      }
-    | BookingButton
   )[];
   meta?: {
     title?: string | null;
@@ -285,15 +246,6 @@ export interface MediaBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "PoppyFormBlock".
- */
-export interface PoppyFormBlock {
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'PoppyFormBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "linkBlock".
  */
 export interface LinkBlock {
@@ -332,114 +284,6 @@ export interface ImageSliderBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'imageSlider';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonials".
- */
-export interface Testimonial {
-  id: number;
-  testimonial: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "letters".
- */
-export interface Letter {
-  id: number;
-  senderName: string;
-  date?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  featured?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "bookingButton".
- */
-export interface BookingButton {
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'bookingButton';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "hours".
- */
-export interface Hour {
-  id: number;
-  /**
-   * A descriptive label for this hours entry (e.g., "Summer Hours", "Holiday Hours")
-   */
-  label: string;
-  /**
-   * Select the start date
-   */
-  hoursStart: string;
-  /**
-   * Select the end date
-   */
-  hoursEnd: string;
-  /**
-   * The detailed information about these hours
-   */
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  /**
-   * Check this to make these hours visible on the site
-   */
-  isActive?: boolean | null;
-  /**
-   * Lower numbers appear first
-   */
-  sortOrder?: number | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -672,18 +516,6 @@ export interface PayloadLockedDocument {
         value: number | Page;
       } | null)
     | ({
-        relationTo: 'testimonials';
-        value: number | Testimonial;
-      } | null)
-    | ({
-        relationTo: 'hours';
-        value: number | Hour;
-      } | null)
-    | ({
-        relationTo: 'letters';
-        value: number | Letter;
-      } | null)
-    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -802,41 +634,8 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        PoppyFormBlock?: T | PoppyFormBlockSelect<T>;
         linkBlock?: T | LinkBlockSelect<T>;
         imageSlider?: T | ImageSliderBlockSelect<T>;
-        testimonialsBlock?:
-          | T
-          | {
-              heading?: T;
-              displayType?: T;
-              testimonialsCount?: T;
-              selectedTestimonials?: T;
-              showAsCarousel?: T;
-              backgroundColor?: T;
-              id?: T;
-              blockName?: T;
-            };
-        hoursBlock?:
-          | T
-          | {
-              type?: T;
-              maxHoursToShow?: T;
-              id?: T;
-              blockName?: T;
-            };
-        lettersBlock?:
-          | T
-          | {
-              heading?: T;
-              displayType?: T;
-              lettersCount?: T;
-              selectedLetters?: T;
-              backgroundColor?: T;
-              id?: T;
-              blockName?: T;
-            };
-        bookingButton?: T | BookingButtonSelect<T>;
       };
   meta?:
     | T
@@ -903,14 +702,6 @@ export interface MediaBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "PoppyFormBlock_select".
- */
-export interface PoppyFormBlockSelect<T extends boolean = true> {
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "linkBlock_select".
  */
 export interface LinkBlockSelect<T extends boolean = true> {
@@ -945,50 +736,6 @@ export interface ImageSliderBlockSelect<T extends boolean = true> {
       };
   id?: T;
   blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "bookingButton_select".
- */
-export interface BookingButtonSelect<T extends boolean = true> {
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonials_select".
- */
-export interface TestimonialsSelect<T extends boolean = true> {
-  testimonial?: T;
-  name?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "hours_select".
- */
-export interface HoursSelect<T extends boolean = true> {
-  label?: T;
-  hoursStart?: T;
-  hoursEnd?: T;
-  content?: T;
-  isActive?: T;
-  sortOrder?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "letters_select".
- */
-export interface LettersSelect<T extends boolean = true> {
-  senderName?: T;
-  date?: T;
-  content?: T;
-  featured?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1248,20 +995,8 @@ export interface Footer {
             blockName?: string | null;
             blockType: 'IFrame';
           }
-        | PoppyFormBlock
         | LinkBlock
         | ImageSliderBlock
-        | {
-            heading?: string | null;
-            displayType?: ('count' | 'specific') | null;
-            testimonialsCount?: number | null;
-            selectedTestimonials?: (number | Testimonial)[] | null;
-            showAsCarousel?: boolean | null;
-            backgroundColor?: ('white' | 'lightGray' | 'brandPrimary') | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'testimonialsBlock';
-          }
       )[]
     | null;
   navItems?:
@@ -1370,21 +1105,8 @@ export interface FooterSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        PoppyFormBlock?: T | PoppyFormBlockSelect<T>;
         linkBlock?: T | LinkBlockSelect<T>;
         imageSlider?: T | ImageSliderBlockSelect<T>;
-        testimonialsBlock?:
-          | T
-          | {
-              heading?: T;
-              displayType?: T;
-              testimonialsCount?: T;
-              selectedTestimonials?: T;
-              showAsCarousel?: T;
-              backgroundColor?: T;
-              id?: T;
-              blockName?: T;
-            };
       };
   navItems?:
     | T

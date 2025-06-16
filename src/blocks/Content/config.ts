@@ -13,7 +13,6 @@ import { link } from '@/fields/link'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { LinkBlock } from '@/blocks/LinkBlock/config'
-import { HoursBlock } from '@/blocks/HoursBlock/HoursBlockConfig'
 
 const columnFields: Field[] = [
   {
@@ -49,7 +48,7 @@ const columnFields: Field[] = [
           AlignFeature(),
           ParagraphFeature(),
           HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
-          BlocksFeature({ blocks: [MediaBlock, FormBlock, LinkBlock, HoursBlock] }),
+          BlocksFeature({ blocks: [MediaBlock, FormBlock, LinkBlock] }),
           OrderedListFeature(),
           UnorderedListFeature(),
           FixedToolbarFeature(),

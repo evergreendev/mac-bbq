@@ -15,7 +15,6 @@ import { getCachedGlobal } from '@/utilities/getGlobals'
 import { getPayload } from 'payload'
 import Hero from '@/components/Hero'
 import Image from 'next/image'
-import HoursBlockComponent from '@/blocks/HoursBlock/HoursBlockComponent'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -64,7 +63,7 @@ export default async function Page({ params: paramsPromise }: Args) {
           <Header centerNav={false} />
           {images && images.length > 0 && <Hero images={images} logo={siteOptions.siteLogoLight} />}
           <h1 className="border-b-brand-accent-500 border-b-4 text-4xl font-bold font-display text-center p-6 text-white bg-brand-primary-600 sm:text-5xl md:text-6xl">
-            {page.title === 'Home' ? 'World Famous Pioneer Auto Show' : page.title}
+            {page.title === 'Home' ? 'McBride Military Appreciation BBQ' : page.title}
           </h1>
           <div className="hidden md:block z-50 bg-brand-primary-500 text-white border-b border-blue-950">
             <div className="container max-w-screen-lg p-2 flex flex-wrap justify-between items-center">
@@ -74,15 +73,6 @@ export default async function Page({ params: paramsPromise }: Args) {
               </div>
               <div className="flex flex-col items-center">
                 <Image src="/come-in-and-visit-our-famous-show.png" width={300} height={200} alt="American Pickers" />
-              </div>
-              <div>
-                <HoursBlockComponent blockType="hoursBlock" type="current"/>
-                <a
-                  href="tel:6056692691"
-                  className="block text-base font-semibold hover:underline"
-                >
-                  (605) 669-2691
-                </a>
               </div>
             </div>
           </div>

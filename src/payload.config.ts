@@ -2,7 +2,6 @@
 import * as nodeMailer from "nodemailer";
 import { Media } from './collections/Media'
 import { Pages } from '@/collections/Pages'
-import Hours from '@/collections/Hours'
 
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
@@ -30,8 +29,6 @@ import { Users } from '@/collections/Users'
 import { SiteOptions } from '@/SiteOptions/config'
 import { Footer } from '@/Footer/config'
 import { Header } from '@/Header/config'
-import Testimonials from '@/collections/Testimonials'
-import { Letters } from '@/collections/LettersCollectionConfig'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -61,7 +58,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media,Pages, Testimonials, Hours, Letters],
+  collections: [Users, Media,Pages,],
   globals: [Header, Footer, SiteOptions],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

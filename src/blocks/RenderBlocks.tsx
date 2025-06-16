@@ -6,26 +6,16 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import IFrameBlock from '@/blocks/IFrame/Component'
-import PoppyForm  from '@/blocks/PoppyForm/Component'
 import { LinkBlock } from '@/blocks/LinkBlock/Component'
 import { ImageSliderBlock } from '@/blocks/ImageSliderBlock/Component'
-import TestimonialsBlockComponent from '@/blocks/Testimonials/Component'
-import Hours from '@/blocks/HoursBlock/HoursBlockComponent'
-import Letters from '@/blocks/Letters/Component'
-import BookingButton from '@/blocks/BookingButton/Component'
 
 const blockComponents = {
   content: ContentBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   IFrame: IFrameBlock,
-  PoppyFormBlock: PoppyForm,
   linkBlock: LinkBlock,
   imageSlider: ImageSliderBlock,
-  testimonialsBlock: TestimonialsBlockComponent,
-  hoursBlock: Hours,
-  lettersBlock: Letters,
-  bookingButton: BookingButton
 }
 
 export const RenderBlocks: React.FC<{
