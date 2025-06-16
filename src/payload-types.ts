@@ -14,6 +14,7 @@ export interface Config {
     users: User;
     media: Media;
     pages: Page;
+    honorees: Honoree;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -26,6 +27,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    honorees: HonoreesSelect<false> | HonoreesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -137,6 +139,24 @@ export interface Page {
         id?: string | null;
       }[]
     | null;
+  headerText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  dates?: string | null;
+  location?: string | null;
+  ticketLink?: string | null;
   layout: (
     | ContentBlock
     | MediaBlock
@@ -155,6 +175,7 @@ export interface Page {
       }
     | LinkBlock
     | ImageSliderBlock
+    | HonoreesBlock
   )[];
   meta?: {
     title?: string | null;
@@ -284,6 +305,35 @@ export interface ImageSliderBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'imageSlider';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HonoreesBlock".
+ */
+export interface HonoreesBlock {
+  heading: string;
+  subheading?: string | null;
+  honorees: (number | Honoree)[];
+  backgroundStyle?: ('light' | 'dark' | 'none') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'honoreesBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "honorees".
+ */
+export interface Honoree {
+  id: number;
+  name: string;
+  title: string;
+  image: number | Media;
+  description?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -516,6 +566,10 @@ export interface PayloadLockedDocument {
         value: number | Page;
       } | null)
     | ({
+        relationTo: 'honorees';
+        value: number | Honoree;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -615,6 +669,10 @@ export interface PagesSelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
+  headerText?: T;
+  dates?: T;
+  location?: T;
+  ticketLink?: T;
   layout?:
     | T
     | {
@@ -636,6 +694,7 @@ export interface PagesSelect<T extends boolean = true> {
             };
         linkBlock?: T | LinkBlockSelect<T>;
         imageSlider?: T | ImageSliderBlockSelect<T>;
+        honoreesBlock?: T | HonoreesBlockSelect<T>;
       };
   meta?:
     | T
@@ -736,6 +795,33 @@ export interface ImageSliderBlockSelect<T extends boolean = true> {
       };
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HonoreesBlock_select".
+ */
+export interface HonoreesBlockSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  honorees?: T;
+  backgroundStyle?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "honorees_select".
+ */
+export interface HonoreesSelect<T extends boolean = true> {
+  name?: T;
+  title?: T;
+  image?: T;
+  description?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

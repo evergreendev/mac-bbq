@@ -8,6 +8,7 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import IFrameBlock from '@/blocks/IFrame/Component'
 import { LinkBlock } from '@/blocks/LinkBlock/Component'
 import { ImageSliderBlock } from '@/blocks/ImageSliderBlock/Component'
+import { HonoreesBlock } from '@/blocks/HonoreesBlock/Component'
 
 const blockComponents = {
   content: ContentBlock,
@@ -16,6 +17,7 @@ const blockComponents = {
   IFrame: IFrameBlock,
   linkBlock: LinkBlock,
   imageSlider: ImageSliderBlock,
+  honoreesBlock: HonoreesBlock,
 }
 
 export const RenderBlocks: React.FC<{

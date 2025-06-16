@@ -48,45 +48,37 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
 
   return (
     <>
-      <div className="bg-brand-neutral-800 text-white">
+      <div className="bg-gradient-to-r from-brand-primary-700 to-brand-primary-900 text-white">
         <div className="container flex justify-between py-4 items-center">
-          <Link href="/" className={`w-32 transition-all ${centerNav ? 'hidden' : ''}`}>
-            <Image
-              src={logo.url || ''}
-              alt={logo.alt || 'Logo'}
-              width={200}
-              height={200}
-              priority
-              className="h-auto"
-            />
-          </Link>
-          <div className="hidden sm:block">
+          <div className="hidden sm:flex items-center space-x-4">
             {children}
           </div>
         </div>
       </div>
 
       <header
-        className={`hidden md:block sticky transition-colors top-0 z-50 ${!centerNav || hasScrolled ? 'bg-brand-neutral-700 text-white border-b border-blue-950' : ''}`}
+        className={`hidden md:block sticky transition-colors top-0 z-50 ${!centerNav || hasScrolled ? 'bg-brand-primary-600 text-white shadow-lg' : ''}`}
         {...(theme ? { 'data-theme': theme } : {})}
       >
-        <div className="container relative z-20 py-2 flex justify-between text-3xl ">
+        <div className="container relative z-20 py-3 flex justify-between">
           <HeaderNav header={header} centerNav={centerNav} />
         </div>
       </header>
       <header className={`md:hidden`}>
         <button
           onClick={() => setMobileNavIsOpen(!mobileNavIsOpen)}
-          className="fixed z-50 top-4 right-4 bg-white/60 rounded text-brand-primary-500"
+          className="fixed z-50 top-4 right-4 bg-white/80 rounded-full p-1 shadow-lg text-brand-primary-600"
         >
           {mobileNavIsOpen ? (
-            <XCircle size="34" className="text-brand-primary-500" />
+            <XCircle size="34" className="text-brand-primary-600" />
           ) : (
-            <Menu size="34" className="text-brand-primary-500" />
+            <Menu size="34" className="text-brand-primary-600" />
           )}
         </button>
         <div
-          className={`fixed transition-transform inset-0 bg-brand-neutral-700 z-40 bg-opacity-95 ${mobileNavIsOpen ? '' : '-translate-x-full'}`}
+          className={`fixed transition-all duration-300 ease-in-out inset-0 bg-gradient-to-b from-brand-primary-700 to-brand-primary-900 z-40 ${
+            mobileNavIsOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
         >
           <MobileNav header={header} />
         </div>

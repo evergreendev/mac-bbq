@@ -42,17 +42,21 @@ const SubMenu = ({ subItems }: { subItems: { id: string; link: Link }[] }) => {
     <div className="relative">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="text-2xl uppercase"
+        className="flex items-center text-lg hover:text-brand-accent-400 transition-colors"
         aria-expanded={isOpen}
         aria-label={isOpen ? 'Collapse submenu' : 'Expand submenu'}
       >
-        {isOpen ? <ChevronUpCircle /> : <ChevronDownCircle />}
+        {isOpen ? <ChevronUpCircle className="w-5 h-5" /> : <ChevronDownCircle className="w-5 h-5" />}
       </button>
       {isOpen && (
-        <ul className="absolute bg-brand-neutral-700 shadow-md right-0">
+        <ul className="absolute bg-brand-primary-800 shadow-lg right-0 mt-2 rounded-md overflow-hidden min-w-[200px] z-50">
           {subItems.map((item) => (
-            <li key={item.id} className="p-2">
-              <CMSLink {...item.link} appearance="link" className="text-xl w-full" />
+            <li key={item.id} className="border-b border-brand-primary-700 last:border-b-0">
+              <CMSLink 
+                {...item.link} 
+                appearance="link" 
+                className="text-base w-full block p-3 hover:bg-brand-primary-700 transition-colors" 
+              />
             </li>
           ))}
         </ul>
@@ -63,8 +67,12 @@ const SubMenu = ({ subItems }: { subItems: { id: string; link: Link }[] }) => {
 
 const NavItem = ({ link, subItems }: { link: Link; subItems?: {id:string,link:Link}[] }) => {
   return (
-    <div className="flex gap-2">
-      <CMSLink {...link} appearance="link" className="text-2xl uppercase" />
+    <div className="flex gap-2 items-center">
+      <CMSLink 
+        {...link} 
+        appearance="link" 
+        className="text-lg font-semibold uppercase tracking-wide hover:text-brand-accent-400 transition-colors" 
+      />
       {subItems && subItems.length > 0 &&
         <SubMenu subItems={subItems} />
       }
@@ -81,10 +89,6 @@ export const HeaderNav: React.FC<{ header: HeaderType; centerNav: boolean }> = (
         // @ts-ignore
         return <NavItem key={i} link={link} subItems={subItems} />
       })}
-      {/*      <Link href="/search">
-        <span className="sr-only">Search</span>
-        <SearchIcon className="w-5 text-primary" />
-      </Link>*/}
     </nav>
   )
 }

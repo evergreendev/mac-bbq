@@ -38,7 +38,7 @@ const Hero = ({ images }: HeroProps) => {
 
   return (
     <div className="flex flex-wrap w-full">
-      <div className="relative aspect-video max-h-[50vh] w-full overflow-hidden">
+      <div className="relative aspect-video max-h-[70vh] w-full overflow-hidden">
         {images.map((image, i) => {
           if (image.image && typeof image.image !== 'number')
             return (
@@ -46,19 +46,19 @@ const Hero = ({ images }: HeroProps) => {
                 key={image.id}
                 className={`absolute inset-0 duration-700 transition-opacity ${i === currImage ? 'opacity-100 z-0' : 'opacity-0 z-0'}`}
               >
+                <div>
+
+                  <div className="w-full border-t border-white">
+
+                  </div>
+                </div>
+                <div className={`absolute inset-0 bg-black bg-opacity-50 z-10`}/>
                 <Image
                   src={image.image.url || ''}
                   alt={image.image.alt || ''}
                   width={image.image.width || 0}
                   height={image.image.height || 0}
-                  className={`z-10 absolute  h-full w-full  object-contain object-center`}
-                />
-                <Image
-                  src={image.image.url || ''}
-                  alt={image.image.alt || ''}
-                  width={image.image.width || 0}
-                  height={image.image.height || 0}
-                  className={`z-0 absolute duration-700 h-full w-full transition-opacity object-cover object-center blur-md`}
+                  className={`z-0 absolute duration-700 h-full w-full transition-opacity object-cover object-center`}
                 />
               </div>
             )
