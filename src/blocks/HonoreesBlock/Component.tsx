@@ -44,7 +44,7 @@ export const HonoreesBlock: React.FC<
                 className="flex flex-col items-center text-black bg-white rounded-lg shadow-lg overflow-hidden transition-transform"
               >
                 {image && typeof image !== 'number' && (
-                  <div className="w-full aspect-square relative">
+                  <div className="w-full aspect-[2/3] relative">
                     <Image
                       src={image.url||""}
                       alt={image.alt || `Photo of ${name}`}
