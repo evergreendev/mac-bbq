@@ -16,7 +16,7 @@ export const HonoreesBlock: React.FC<
   const backgroundClasses = {
     dark: 'bg-brand-neutral-500 text-white',
     light: 'bg-brand-neutral-50 text-gray-900',
-    none: '',
+    none: 'bg-brand-accent-500 text-white',
   }
 
   const appliedBackgroundClasses = backgroundStyle
@@ -27,7 +27,7 @@ export const HonoreesBlock: React.FC<
     <div className={`w-full py-12 ${appliedBackgroundClasses}`}>
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">{heading}</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
           {subheading && <p className="text-xl">{subheading}</p>}
         </div>
         
@@ -41,12 +41,12 @@ export const HonoreesBlock: React.FC<
             return (
               <div 
                 key={index} 
-                className="flex flex-col items-center bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105"
+                className="flex flex-col items-center text-black bg-white rounded-lg shadow-lg overflow-hidden transition-transform"
               >
                 {image && typeof image !== 'number' && (
-                  <div className="w-full h-64 relative">
+                  <div className="w-full aspect-square relative">
                     <Image
-                      src={image.url}
+                      src={image.url||""}
                       alt={image.alt || `Photo of ${name}`}
                       fill
                       className="object-cover"

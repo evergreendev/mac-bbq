@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { cn } from 'src/utilities/cn'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
-import { Playball, Roboto_Condensed, Bree_Serif } from 'next/font/google'
+import { Playball, Roboto_Condensed, Bree_Serif, Nunito } from 'next/font/google'
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
@@ -18,6 +18,13 @@ const playball = Playball({
   subsets:['latin'],
   weight: ["400"],
   variable: "--font-playball",
+  display: "swap"
+})
+
+const nunito = Nunito({
+  subsets:['latin'],
+  weight: ["400", "700"],
+  variable: "--font-nunito",
   display: "swap"
 })
 
@@ -39,7 +46,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { isEnabled } = await draftMode()
 
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable, breeSerif.variable, playball.variable, robotoCondensed.variable)} lang="en" suppressHydrationWarning>
+    <html className={cn(GeistSans.variable, nunito.variable, GeistMono.variable, breeSerif.variable, playball.variable, robotoCondensed.variable)} lang="en" suppressHydrationWarning>
       <head>
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />

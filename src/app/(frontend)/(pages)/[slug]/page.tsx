@@ -53,17 +53,23 @@ export default async function Page({ params: paramsPromise }: Args) {
     return <PayloadRedirects url={url} />
   }
 
-  const { layout, images } = page
+  const { layout, images, headerText, location, ticketLink, dates } = page
 
   return (
     <>
       <article>
         <div className="w-full mx-auto">
           <Header centerNav={false} />
-          {images && images.length > 0 && <Hero images={images} logo={siteOptions.siteLogoLight} />}
-          <h1 className="border-b-brand-accent-500 border-b-4 text-4xl font-bold font-display text-center p-6 text-white bg-brand-primary-600 sm:text-5xl md:text-6xl">
-            {page.title === 'Home' ? 'McBride Military Appreciation BBQ' : page.title}
-          </h1>
+          {images && images.length > 0 && (
+            <Hero
+              headerText={headerText}
+              dates={dates}
+              location={location}
+              ticketLink={ticketLink}
+              images={images}
+              logo={siteOptions.siteLogoLight}
+            />
+          )}
           <div className="max-w-screen-xl mx-auto shadow-xl ">
             <PageClient />
             {/* Allows redirects for valid pages too */}
