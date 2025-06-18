@@ -66,9 +66,9 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
               <Image 
                 src={logo.url || ''} 
                 alt={logo.alt || 'Site Logo'} 
-                width={40} 
-                height={40} 
-                className="h-10 w-auto object-contain" 
+                width={80}
+                height={80}
+                className="h-20 w-auto object-contain"
               />
             </Link>
           )}
