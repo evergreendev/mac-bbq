@@ -51,6 +51,17 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
       <div className="bg-gradient-to-r from-brand-primary-700 to-brand-primary-900 text-white">
         <div className="container flex justify-between py-4 items-center">
           <div className="hidden sm:flex items-center space-x-4">
+            {logo && typeof logo !== 'number' && (
+              <Link href="/" className="flex-shrink-0 mr-4">
+                <Image
+                  src={logo.url || ''}
+                  alt={logo.alt || 'Site Logo'}
+                  width={80}
+                  height={80}
+                  className="h-20 w-auto object-contain"
+                />
+              </Link>
+            )}
             {children}
           </div>
         </div>
@@ -61,17 +72,6 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
         {...(theme ? { 'data-theme': theme } : {})}
       >
         <div className="container relative z-20 py-3 flex justify-between items-center">
-          {logo && typeof logo !== 'number' && (
-            <Link href="/" className="flex-shrink-0 mr-4">
-              <Image 
-                src={logo.url || ''} 
-                alt={logo.alt || 'Site Logo'} 
-                width={80}
-                height={80}
-                className="h-20 w-auto object-contain"
-              />
-            </Link>
-          )}
           <HeaderNav header={header} centerNav={centerNav} />
         </div>
       </header>
