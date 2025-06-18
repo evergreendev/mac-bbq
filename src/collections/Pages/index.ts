@@ -21,6 +21,7 @@ import { LinkBlock } from '@/blocks/LinkBlock/config'
 import { ImageSliderBlock } from '@/blocks/ImageSliderBlock/config'
 import { HonoreesBlock } from '@/blocks/HonoreesBlock/config'
 import { FixedToolbarFeature, HeadingFeature, InlineToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import { FormBlock } from '@/blocks/Form/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -115,6 +116,7 @@ export const Pages: CollectionConfig = {
                 LinkBlock,
                 ImageSliderBlock,
                 HonoreesBlock,
+                FormBlock
               ],
               required: true,
             },
