@@ -60,7 +60,18 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
         className={`hidden md:block sticky transition-colors top-0 z-50 ${!centerNav || hasScrolled ? 'bg-brand-primary-600 text-white shadow-lg' : ''}`}
         {...(theme ? { 'data-theme': theme } : {})}
       >
-        <div className="container relative z-20 py-3 flex justify-between">
+        <div className="container relative z-20 py-3 flex justify-between items-center">
+          {logo && typeof logo !== 'number' && (
+            <Link href="/" className="flex-shrink-0 mr-4">
+              <Image 
+                src={logo.url || ''} 
+                alt={logo.alt || 'Site Logo'} 
+                width={40} 
+                height={40} 
+                className="h-10 w-auto object-contain" 
+              />
+            </Link>
+          )}
           <HeaderNav header={header} centerNav={centerNav} />
         </div>
       </header>
@@ -80,7 +91,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
             mobileNavIsOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
         >
-          <MobileNav header={header} />
+          <MobileNav header={header} logo={logo} />
         </div>
       </header>
     </>

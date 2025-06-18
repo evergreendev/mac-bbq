@@ -2,18 +2,30 @@
 
 import React from 'react'
 
-import type { Header as HeaderType } from '@/payload-types'
+import type { Header as HeaderType, Media } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
 import Link from 'next/link'
 import { SearchIcon } from 'lucide-react'
+import Image from 'next/image'
 
-export const MobileNav: React.FC<{ header: HeaderType }> = ({ header }) => {
+export const MobileNav: React.FC<{ header: HeaderType, logo?: Media }> = ({ header, logo }) => {
   const navItems = header?.navItems || []
 
   return (
     <nav className="flex flex-col h-full">
       <div className="p-8 flex-1">
+        {logo && typeof logo !== 'number' && (
+          <Link href="/" className="block mb-6">
+            <Image 
+              src={logo.url || ''} 
+              alt={logo.alt || 'Site Logo'} 
+              width={40} 
+              height={40} 
+              className="h-10 w-auto object-contain" 
+            />
+          </Link>
+        )}
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-white mb-2">Menu</h2>
           <div className="h-1 w-16 bg-brand-accent-500"></div>
