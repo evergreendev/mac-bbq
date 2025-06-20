@@ -15,6 +15,7 @@ export interface Config {
     media: Media;
     pages: Page;
     honorees: Honoree;
+    sponsors: Sponsor;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -28,6 +29,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     honorees: HonoreesSelect<false> | HonoreesSelect<true>;
+    sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -176,6 +178,7 @@ export interface Page {
     | LinkBlock
     | ImageSliderBlock
     | HonoreesBlock
+    | SponsorsSliderBlock
     | FormBlock
   )[];
   meta?: {
@@ -333,6 +336,31 @@ export interface Honoree {
   title: string;
   image: number | Media;
   description?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SponsorsSliderBlock".
+ */
+export interface SponsorsSliderBlock {
+  sponsors: (number | Sponsor)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'sponsorsSlider';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors".
+ */
+export interface Sponsor {
+  id: number;
+  name: string;
+  logo: number | Media;
+  url?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -600,6 +628,10 @@ export interface PayloadLockedDocument {
         value: number | Honoree;
       } | null)
     | ({
+        relationTo: 'sponsors';
+        value: number | Sponsor;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -725,6 +757,7 @@ export interface PagesSelect<T extends boolean = true> {
         linkBlock?: T | LinkBlockSelect<T>;
         imageSlider?: T | ImageSliderBlockSelect<T>;
         honoreesBlock?: T | HonoreesBlockSelect<T>;
+        sponsorsSlider?: T | SponsorsSliderBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
       };
   meta?:
@@ -844,6 +877,15 @@ export interface HonoreesBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SponsorsSliderBlock_select".
+ */
+export interface SponsorsSliderBlockSelect<T extends boolean = true> {
+  sponsors?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "FormBlock_select".
  */
 export interface FormBlockSelect<T extends boolean = true> {
@@ -862,6 +904,20 @@ export interface HonoreesSelect<T extends boolean = true> {
   title?: T;
   image?: T;
   description?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors_select".
+ */
+export interface SponsorsSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  url?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;

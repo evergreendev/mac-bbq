@@ -9,6 +9,7 @@ import IFrameBlock from '@/blocks/IFrame/Component'
 import { LinkBlock } from '@/blocks/LinkBlock/Component'
 import { ImageSliderBlock } from '@/blocks/ImageSliderBlock/Component'
 import { HonoreesBlock } from '@/blocks/HonoreesBlock/Component'
+import { SponsorsSliderBlock } from '@/blocks/SponsorsSliderBlock/Component'
 
 const blockComponents = {
   content: ContentBlock,
@@ -18,6 +19,7 @@ const blockComponents = {
   linkBlock: LinkBlock,
   imageSlider: ImageSliderBlock,
   honoreesBlock: HonoreesBlock,
+  sponsorsSlider: SponsorsSliderBlock,
 }
 
 export const RenderBlocks: React.FC<{
