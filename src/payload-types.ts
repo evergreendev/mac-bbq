@@ -201,10 +201,10 @@ export interface Page {
  * via the `definition` "ContentBlock".
  */
 export interface ContentBlock {
-  key?: string | null;
+  urlKey?: string | null;
   columns?:
     | {
-        key?: string | null;
+        urlKey?: string | null;
         size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
         richText?: {
           root: {
@@ -317,7 +317,7 @@ export interface ImageSliderBlock {
  * via the `definition` "HonoreesBlock".
  */
 export interface HonoreesBlock {
-  key?: string | null;
+  urlKey?: string | null;
   heading: string;
   subheading?: string | null;
   honorees: (number | Honoree)[];
@@ -779,11 +779,11 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "ContentBlock_select".
  */
 export interface ContentBlockSelect<T extends boolean = true> {
-  key?: T;
+  urlKey?: T;
   columns?:
     | T
     | {
-        key?: T;
+        urlKey?: T;
         size?: T;
         richText?: T;
         enableLink?: T;
@@ -867,7 +867,7 @@ export interface ImageSliderBlockSelect<T extends boolean = true> {
  * via the `definition` "HonoreesBlock_select".
  */
 export interface HonoreesBlockSelect<T extends boolean = true> {
-  key?: T;
+  urlKey?: T;
   heading?: T;
   subheading?: T;
   honorees?: T;

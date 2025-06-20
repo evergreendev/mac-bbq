@@ -11,7 +11,7 @@ export const HonoreesBlock: React.FC<
     id?: string
   } & Props
 > = (props) => {
-  const { heading, subheading, honorees, backgroundStyle, key } = props
+  const { heading, subheading, honorees, backgroundStyle,urlKey} = props
 
   const backgroundClasses = {
     dark: 'bg-brand-neutral-500 text-white',
@@ -24,7 +24,7 @@ export const HonoreesBlock: React.FC<
     : backgroundClasses.light
 
   return (
-    <div id={key||undefined} className={`w-full py-12 ${appliedBackgroundClasses}`}>
+    <div id={urlKey||undefined} className={`w-full py-12 ${appliedBackgroundClasses}`}>
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
