@@ -47,15 +47,15 @@ const Hero = ({ images, headerText, ticketLink, location, dates }: HeroProps) =>
 
   return (
     <div className="flex flex-wrap w-full">
-      <div className="relative aspect-video max-h-[85vh] w-full overflow-hidden">
+      <div className="relative sm:aspect-video max-h-[85vh] w-full overflow-hidden">
         {images.map((image, i) => {
           if (image.image && typeof image.image !== 'number')
             return (
               <div
                 key={image.id}
-                className={`absolute inset-0 duration-700 transition-opacity ${i === currImage ? 'opacity-100 z-0' : 'opacity-0 z-0'}`}
+                className={`relative sm:absolute inset-0 duration-700 transition-opacity ${i === currImage ? 'opacity-100 z-0' : 'opacity-0 z-0'}`}
               >
-                <div className="text-white max-w-screen-md absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center">
+                <div className="text-white relative p-4 sm:absolute max-w-screen-md z-20 sm:top-1/2 sm:left-1/2 transform sm:-translate-x-1/2 sm:-translate-y-1/2 w-full text-center">
                   <div className="mb-14">
                     {headerText && <RichTextClient enableGutter={false} content={headerText} />}
                   </div>
@@ -79,7 +79,7 @@ const Hero = ({ images, headerText, ticketLink, location, dates }: HeroProps) =>
                   alt={image.image.alt || ''}
                   width={image.image.width || 0}
                   height={image.image.height || 0}
-                  className={`z-0 absolute duration-700 h-full w-full transition-opacity object-cover object-center`}
+                  className={`z-0 absolute inset-0 duration-700 h-full w-full transition-opacity object-cover object-center`}
                 />
               </div>
             )
