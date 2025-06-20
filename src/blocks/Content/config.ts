@@ -13,8 +13,10 @@ import { link } from '@/fields/link'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { LinkBlock } from '@/blocks/LinkBlock/config'
+import KeyField from '@/blocks/KeyField'
 
 const columnFields: Field[] = [
+  KeyField,
   {
     name: 'size',
     type: 'select',
@@ -77,6 +79,7 @@ export const Content: Block = {
   slug: 'content',
   interfaceName: 'ContentBlock',
   fields: [
+    KeyField,
     {
       name: 'columns',
       type: 'array',

@@ -13,7 +13,7 @@ export const ContentBlock: React.FC<
     id?: string
   } & Props
 > = (props) => {
-  const { columns, backgroundStyle, backgroundImage } = props
+  const { columns, backgroundStyle, backgroundImage, key } = props
 
   const colsSpanClasses = {
     full: '12',
@@ -40,7 +40,7 @@ export const ContentBlock: React.FC<
 
 
   return (
-    <div>
+    <div id={key||undefined}>
       <div
         style={
           backgroundStyle === 'image' && backgroundImage && typeof backgroundImage !== 'number'

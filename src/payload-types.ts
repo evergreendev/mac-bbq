@@ -176,6 +176,7 @@ export interface Page {
     | LinkBlock
     | ImageSliderBlock
     | HonoreesBlock
+    | FormBlock
   )[];
   meta?: {
     title?: string | null;
@@ -197,8 +198,10 @@ export interface Page {
  * via the `definition` "ContentBlock".
  */
 export interface ContentBlock {
+  key?: string | null;
   columns?:
     | {
+        key?: string | null;
         size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
         richText?: {
           root: {
@@ -311,6 +314,7 @@ export interface ImageSliderBlock {
  * via the `definition` "HonoreesBlock".
  */
 export interface HonoreesBlock {
+  key?: string | null;
   heading: string;
   subheading?: string | null;
   honorees: (number | Honoree)[];
@@ -337,24 +341,29 @@ export interface Honoree {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "redirects".
+ * via the `definition` "FormBlock".
  */
-export interface Redirect {
-  id: number;
-  /**
-   * You will need to rebuild the website when changing this field.
-   */
-  from: string;
-  to?: {
-    type?: ('reference' | 'custom') | null;
-    reference?: {
-      relationTo: 'pages';
-      value: number | Page;
-    } | null;
-    url?: string | null;
-  };
-  updatedAt: string;
-  createdAt: string;
+export interface FormBlock {
+  form: number | Form;
+  enableIntro?: boolean | null;
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'formBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -531,6 +540,27 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects".
+ */
+export interface Redirect {
+  id: number;
+  /**
+   * You will need to rebuild the website when changing this field.
+   */
+  from: string;
+  to?: {
+    type?: ('reference' | 'custom') | null;
+    reference?: {
+      relationTo: 'pages';
+      value: number | Page;
+    } | null;
+    url?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
@@ -695,6 +725,7 @@ export interface PagesSelect<T extends boolean = true> {
         linkBlock?: T | LinkBlockSelect<T>;
         imageSlider?: T | ImageSliderBlockSelect<T>;
         honoreesBlock?: T | HonoreesBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
       };
   meta?:
     | T
@@ -715,9 +746,11 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "ContentBlock_select".
  */
 export interface ContentBlockSelect<T extends boolean = true> {
+  key?: T;
   columns?:
     | T
     | {
+        key?: T;
         size?: T;
         richText?: T;
         enableLink?: T;
@@ -801,10 +834,22 @@ export interface ImageSliderBlockSelect<T extends boolean = true> {
  * via the `definition` "HonoreesBlock_select".
  */
 export interface HonoreesBlockSelect<T extends boolean = true> {
+  key?: T;
   heading?: T;
   subheading?: T;
   honorees?: T;
   backgroundStyle?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FormBlock_select".
+ */
+export interface FormBlockSelect<T extends boolean = true> {
+  form?: T;
+  enableIntro?: T;
+  introContent?: T;
   id?: T;
   blockName?: T;
 }
@@ -1224,32 +1269,6 @@ export interface SiteOptionsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FormBlock".
- */
-export interface FormBlock {
-  form: number | Form;
-  enableIntro?: boolean | null;
-  introContent?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'formBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -1,9 +1,11 @@
 import type { Block } from 'payload'
+import KeyField from '@/blocks/KeyField'
 
 export const HonoreesBlock: Block = {
   slug: 'honoreesBlock',
   interfaceName: 'HonoreesBlock',
   fields: [
+    KeyField,
     {
       name: 'heading',
       type: 'text',

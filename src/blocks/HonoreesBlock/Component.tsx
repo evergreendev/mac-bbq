@@ -11,7 +11,7 @@ export const HonoreesBlock: React.FC<
     id?: string
   } & Props
 > = (props) => {
-  const { heading, subheading, honorees, backgroundStyle } = props
+  const { heading, subheading, honorees, backgroundStyle, key } = props
 
   const backgroundClasses = {
     dark: 'bg-brand-neutral-500 text-white',
@@ -24,20 +24,20 @@ export const HonoreesBlock: React.FC<
     : backgroundClasses.light
 
   return (
-    <div className={`w-full py-12 ${appliedBackgroundClasses}`}>
+    <div id={key||undefined} className={`w-full py-12 ${appliedBackgroundClasses}`}>
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
           {subheading && <p className="text-xl">{subheading}</p>}
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {honorees && honorees.map((honoree, index) => {
             // Check if honoree is a number (ID) or an object
             if (typeof honoree === 'number') return null
-            
+
             const { name, title, image, description } = honoree
-            
+
             return (
               <div 
                 key={index} 
