@@ -34,7 +34,7 @@ export const SponsorsSliderBlock: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="bg-brand-neutral-400 py-8 text-white">
+    <div className="bg-[#dfe2d9] py-8 text-black">
       <div className="container mx-auto">
         <h2 className="text-center text-2xl font-bold mb-6">Thank You to Our Sponsors</h2>
         <Slider {...sliderSettings}>
