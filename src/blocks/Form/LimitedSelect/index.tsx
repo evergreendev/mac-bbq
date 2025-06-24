@@ -44,7 +44,7 @@ export const LimitedSelect: React.FC<
                 {(options as unknown as (SelectFieldOption & {limit:number})[]).map(({ label, value, limit }) => {
                   return (
                     <SelectItem disabled={limit <= 0} key={value} value={value}>
-                      {label} - {limit}
+                      {label} ({limit} needed)
                     </SelectItem>
                   )
                 })}
