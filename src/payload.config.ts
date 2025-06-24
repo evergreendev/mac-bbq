@@ -20,7 +20,8 @@ import {
 } from '@payloadcms/richtext-lexical'
 import sharp from 'sharp' // editor-import
 import path from 'path'
-import { buildConfig } from 'payload'
+import { buildConfig, getPayload } from 'payload'
+import configPromise from '@payload-config'
 import { fileURLToPath } from 'url'
 
 import { revalidateRedirects } from './hooks/revalidateRedirects'
@@ -31,6 +32,7 @@ import { Users } from '@/collections/Users'
 import { SiteOptions } from '@/SiteOptions/config'
 import { Footer } from '@/Footer/config'
 import { Header } from '@/Header/config'
+import { LimitedSelect } from '@/blocks/Form/LimitedSelect/config'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -77,8 +79,7 @@ export default buildConfig({
           enabledCollections: ['pages', 'media'],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
-              return !('name' in field && field.name === 'url');
-
+              return !('name' in field && field.name === 'url')
             })
 
             return [
@@ -134,6 +135,7 @@ export default buildConfig({
     formBuilderPlugin({
       fields: {
         payment: false,
+        LimitedSelect,
       },
       formOverrides: {
         fields: ({ defaultFields }) => {
@@ -154,6 +156,89 @@ export default buildConfig({
             }
             return field
           })
+        },
+      },
+      formSubmissionOverrides: {
+        hooks: {
+          beforeValidate: [
+            async (a) => {
+              const payload = await getPayload({ config: configPromise })
+
+              if (!a?.data?.form) return true;
+
+              const form = await payload.findByID({
+                collection: 'forms',
+                id: a.data.form
+              })
+
+              if (!form || !form.fields) return a.data;
+
+              const limitFieldsArray = form.fields.filter(x => {
+                if (x.blockType !== "limitedSelect") return false;
+
+                return x;
+              })
+
+              if (limitFieldsArray.length === 0) return a.data;
+
+              console.log({
+                ...form,
+                fields: {
+                  ...form.fields.map(field => {
+                    if (field.blockType !== "limitedSelect") return field;
+
+                    return {...field,
+                      options: field?.options?.map(option => {
+                        const optionToUpdate = a?.data?.submissionData.find(
+                          (data: { field: string }) => data.field === field.name,
+                        )
+
+                        if (option.value === optionToUpdate.value){
+                          return {
+                            ...option,
+                            limit: option.limit - 1
+                          }
+                        }
+
+                        return option;
+                      })
+                    }
+                  })
+                }
+              })
+
+
+              await payload.update({
+                collection: "forms",
+                id: a.data.form,
+                data: {
+                  ...form,
+                  fields: form.fields.map(field => {
+                      if (field.blockType !== "limitedSelect") return field;
+
+                      return {...field,
+                        options: field?.options?.map(option => {
+                          const optionToUpdate = a?.data?.submissionData.find(
+                            (data: { field: string }) => data.field === field.name,
+                          )
+
+                          if (option.value === optionToUpdate.value){
+                            return {
+                              ...option,
+                              limit: option.limit - 1
+                            }
+                          }
+
+                          return option;
+                        })
+                      }
+                    })
+                }
+              })
+
+              return a.data;
+            },
+          ],
         },
       },
     }),
