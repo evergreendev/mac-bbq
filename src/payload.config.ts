@@ -33,6 +33,7 @@ import { SiteOptions } from '@/SiteOptions/config'
 import { Footer } from '@/Footer/config'
 import { Header } from '@/Header/config'
 import { LimitedSelect } from '@/blocks/Form/LimitedSelect/config'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -62,6 +63,11 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  email: nodemailerAdapter({
+  defaultFromAddress: 'noreply@mcbridemilitarybbq.com',
+  defaultFromName: 'McBride Military BBQ',
+  transport: transporter
+}),
   collections: [Users, Media, Pages, Honorees, Sponsors],
   globals: [Header, Footer, SiteOptions],
   secret: process.env.PAYLOAD_SECRET || '',
