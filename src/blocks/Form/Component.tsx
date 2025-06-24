@@ -127,7 +127,7 @@ export const FormBlock: React.FC<
   )
 
   return (
-    <div id={urlKey||undefined} className="container lg:max-w-[48rem] pb-20">
+    <div id={urlKey||undefined} className="container lg:max-w-[48rem] p-20 pb-20">
       <FormProvider {...formMethods}>
         {enableIntro && introContent && !hasSubmitted && (
           <RichTextClient className="mb-8" content={introContent} enableGutter={false} />
