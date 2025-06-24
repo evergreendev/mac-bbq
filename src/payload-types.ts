@@ -372,6 +372,7 @@ export interface Sponsor {
  * via the `definition` "FormBlock".
  */
 export interface FormBlock {
+  urlKey?: string | null;
   form: number | Form;
   enableIntro?: boolean | null;
   introContent?: {
@@ -889,6 +890,7 @@ export interface SponsorsSliderBlockSelect<T extends boolean = true> {
  * via the `definition` "FormBlock_select".
  */
 export interface FormBlockSelect<T extends boolean = true> {
+  urlKey?: T;
   form?: T;
   enableIntro?: T;
   introContent?: T;

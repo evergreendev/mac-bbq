@@ -28,6 +28,7 @@ export type FormBlockType = {
   introContent?: {
     [k: string]: unknown
   }[]
+  urlKey?: string
 }
 
 export const FormBlock: React.FC<
@@ -40,6 +41,7 @@ export const FormBlock: React.FC<
     form: formFromProps,
     form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
     introContent,
+    urlKey,
   } = props
 
   const formMethods = useForm({
@@ -125,7 +127,7 @@ export const FormBlock: React.FC<
   )
 
   return (
-    <div className="container lg:max-w-[48rem] pb-20">
+    <div id={urlKey||undefined} className="container lg:max-w-[48rem] pb-20">
       <FormProvider {...formMethods}>
         {enableIntro && introContent && !hasSubmitted && (
           <RichTextClient className="mb-8" content={introContent} enableGutter={false} />
