@@ -91,7 +91,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
             mobileNavIsOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
         >
-          <MobileNav header={header} logo={logo} />
+          <MobileNav header={header} logo={logo} setMobileNavIsOpen={setMobileNavIsOpen} />
         </div>
       </header>
     </>
