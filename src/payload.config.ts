@@ -34,6 +34,7 @@ import { Footer } from '@/Footer/config'
 import { Header } from '@/Header/config'
 import { LimitedSelect } from '@/blocks/Form/LimitedSelect/config'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import * as process from 'node:process'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -150,11 +151,11 @@ export default buildConfig({
         try {
           const submissionData = beforeChangeParams.data.submissionData;
 
-          if (!submissionData.find((x: { field: string }) => x.field === 'role')){//A silly way to tell if it's the volunteer form
+          if (!process.env.ZAPIER_URL || !submissionData.find((x: { field: string }) => x.field === 'role')){//A silly way to tell if it's the volunteer form
             return emails
           }
 
-          await fetch('https://hooks.zapier.com/hooks/catch/21684638/ubtbw5o/', {
+          await fetch(process.env.ZAPIER_URL, {
             method: "POST",
             body: JSON.stringify({
               name: submissionData.find((x: { field: string }) => x.field === 'name'),
