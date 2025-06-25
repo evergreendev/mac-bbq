@@ -1,5 +1,4 @@
-
-import * as nodeMailer from "nodemailer";
+import * as nodeMailer from 'nodemailer'
 import { Media } from './collections/Media'
 import { Pages } from '@/collections/Pages'
 import { Honorees } from '@/collections/Honorees'
@@ -16,7 +15,8 @@ import {
   HeadingFeature,
   ItalicFeature,
   LinkFeature,
-  lexicalEditor, UnderlineFeature,
+  lexicalEditor,
+  UnderlineFeature,
 } from '@payloadcms/richtext-lexical'
 import sharp from 'sharp' // editor-import
 import path from 'path'
@@ -34,17 +34,18 @@ import { Footer } from '@/Footer/config'
 import { Header } from '@/Header/config'
 import { LimitedSelect } from '@/blocks/Form/LimitedSelect/config'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 const transporter = nodeMailer.createTransport({
   host: process.env.EMAIL_HOST,
-  port: Number(process.env.EMAIL_PORT)||587,
+  port: Number(process.env.EMAIL_PORT) || 587,
   auth: {
     user: process.env.EMAIL_USERNAME,
     pass: process.env.EMAIL_PASSWORD,
   },
-});
+})
 
 const generateTitle: GenerateTitle<Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Pioneer Auto Show` : 'Pioneer Auto Show'
@@ -64,10 +65,10 @@ export default buildConfig({
     },
   },
   email: nodemailerAdapter({
-  defaultFromAddress: 'noreply@mcbridemilitarybbq.com',
-  defaultFromName: 'McBride Military BBQ',
-  transport: transporter
-}),
+    defaultFromAddress: 'noreply@mcbridemilitarybbq.com',
+    defaultFromName: 'McBride Military BBQ',
+    transport: transporter,
+  }),
   collections: [Users, Media, Pages, Honorees, Sponsors],
   globals: [Header, Footer, SiteOptions],
   secret: process.env.PAYLOAD_SECRET || '',
@@ -143,6 +144,30 @@ export default buildConfig({
         payment: false,
         LimitedSelect,
       },
+      beforeEmail: async (emails, beforeChangeParams) => {
+        console.log("-----------------",beforeChangeParams.data.submissionData);
+
+        try {
+          const submissionData = beforeChangeParams.data.submissionData;
+
+          if (!submissionData.find((x: { field: string }) => x.field === 'role')){//A silly way to tell if it's the volunteer form
+            return emails
+          }
+
+          await fetch('https://hooks.zapier.com/hooks/catch/21684638/ubtbw5o/', {
+            method: "POST",
+            body: JSON.stringify({
+              name: submissionData.find((x: { field: string }) => x.field === 'name'),
+              email: submissionData.find((x: { field: string }) => x.field === 'email'),
+              role: submissionData.find((x: { field: string }) => x.field === 'role')
+            })
+          })
+        } catch (e) {
+          console.log(e)
+        }
+
+        return emails
+      },
       formOverrides: {
         fields: ({ defaultFields }) => {
           return defaultFields.map((field) => {
@@ -170,79 +195,80 @@ export default buildConfig({
             async (a) => {
               const payload = await getPayload({ config: configPromise })
 
-              if (!a?.data?.form) return true;
+              if (!a?.data?.form) return true
 
               const form = await payload.findByID({
                 collection: 'forms',
-                id: a.data.form
+                id: a.data.form,
               })
 
-              if (!form || !form.fields) return a.data;
+              if (!form || !form.fields) return a.data
 
-              const limitFieldsArray = form.fields.filter(x => {
-                if (x.blockType !== "limitedSelect") return false;
+              const limitFieldsArray = form.fields.filter((x) => {
+                if (x.blockType !== 'limitedSelect') return false
 
-                return x;
+                return x
               })
 
-              if (limitFieldsArray.length === 0) return a.data;
+              if (limitFieldsArray.length === 0) return a.data
 
               console.log({
                 ...form,
                 fields: {
-                  ...form.fields.map(field => {
-                    if (field.blockType !== "limitedSelect") return field;
+                  ...form.fields.map((field) => {
+                    if (field.blockType !== 'limitedSelect') return field
 
-                    return {...field,
-                      options: field?.options?.map(option => {
+                    return {
+                      ...field,
+                      options: field?.options?.map((option) => {
                         const optionToUpdate = a?.data?.submissionData.find(
                           (data: { field: string }) => data.field === field.name,
                         )
 
-                        if (option.value === optionToUpdate.value){
+                        if (option.value === optionToUpdate.value) {
                           return {
                             ...option,
-                            limit: option.limit - 1
+                            limit: option.limit - 1,
                           }
                         }
 
-                        return option;
-                      })
+                        return option
+                      }),
                     }
-                  })
-                }
+                  }),
+                },
               })
 
-
               await payload.update({
-                collection: "forms",
+                collection: 'forms',
                 id: a.data.form,
                 data: {
                   ...form,
-                  fields: form.fields.map(field => {
-                      if (field.blockType !== "limitedSelect") return field;
+                  fields: form.fields.map((field) => {
+                    if (field.blockType !== 'limitedSelect') return field
 
-                      return {...field,
-                        options: field?.options?.map(option => {
-                          const optionToUpdate = a?.data?.submissionData.find(
-                            (data: { field: string }) => data.field === field.name,
-                          )
+                    return {
+                      ...field,
+                      options: field?.options?.map((option) => {
+                        const optionToUpdate = a?.data?.submissionData.find(
+                          (data: { field: string }) => data.field === field.name,
+                        )
 
-                          if (option.value === optionToUpdate.value){
-                            return {
-                              ...option,
-                              limit: option.limit - 1
-                            }
+                        if (option.value === optionToUpdate.value) {
+                          return {
+                            ...option,
+                            limit: option.limit - 1,
                           }
+                        }
 
-                          return option;
-                        })
-                      }
-                    })
-                }
+                        return option
+                      }),
+                    }
+                  }),
+                },
               })
 
-              return a.data;
+              return a.data
             },
           ],
         },
