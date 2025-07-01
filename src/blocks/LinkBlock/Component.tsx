@@ -12,5 +12,5 @@ export const LinkBlock: React.FC<
   }
 > = ({ links }) => {
   if (!links || !links.length) return null
-  return <CMSLink className="grow w-full sm:w-auto" size="lg" {...links[0].link} />
+  return <CMSLink className="grow w-full sm:w-auto flex" size="lg" {...links[0].link} />
 }

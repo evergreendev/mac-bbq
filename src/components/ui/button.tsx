@@ -26,7 +26,7 @@ const buttonVariants = cva(
         link: 'text-primary items-start justify-start underline-offset-4 hover:underline',
         outline: 'border border-border bg-transparent hover:bg-card hover:text-accent-foreground',
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        highlight: 'bg-brand-accent-500 text-brand-neutral-800 hover:bg-brand-accent-600 hover:border hover:border-white no-underline',
+        highlight: 'bg-brand-accent-500 text-white hover:bg-brand-accent-600 hover:border hover:border-white no-underline',
         gold: 'bg-brand-accent-500 text-brand-neutral-800 hover:bg-brand-accent-600 hover:border hover:border-white',
         full: 'text-white hover:bg-brand-primary-600 w-full border-0 text-xl flex font-normal bg-brand-primary-500 py-3 px-4 pl-16 text-left justify-start',
         fullOrange: 'text-white hover:bg-brand-primary-600 w-full border-0 text-xl flex font-normal bg-brand-primary-500 py-3 px-4 pl-16 text-left justify-start'

@@ -14,7 +14,7 @@ export const ContentBlockClient: React.FC<
     id?: string
   } & Props
 > = (props) => {
-  const { columns, backgroundStyle, backgroundImage } = props
+  const { columns, backgroundStyle, backgroundImage, urlKey } = props
 
   const colsSpanClasses = {
     full: '12',
@@ -39,7 +39,7 @@ export const ContentBlockClient: React.FC<
     : backgroundClasses.default
 
   return (
-    <div>
+    <div id={urlKey||undefined}>
       <div
         style={
           backgroundStyle === 'image' && backgroundImage && typeof backgroundImage !== 'number'
